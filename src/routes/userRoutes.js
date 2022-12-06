@@ -5,19 +5,28 @@ import {
   Cpostuser,
   Cdeleteuser,
   Cerroruser,
+  CuserReg,
+  ClogUser,
 } from "../controllers/userControllers.js";
+import { checkAuth } from "../middleware/Auth.js";
 
 const userRoutes = express.Router();
 
-//Routes GET, POST, DELETE
+//USER MANAGEMENT
 //GET ALL USERS
-userRoutes.get("/api/users", Cgetusers);
+userRoutes.get("/users", checkAuth, Cgetusers);
 //GET ONE USER
-userRoutes.get("/api/user", Cgetuser);
+userRoutes.get("/user", Cgetuser);
 //POST ONE USER
-userRoutes.post("/api/user", Cpostuser);
+userRoutes.post("/user", Cpostuser);
 //DELETE ONE USER
-userRoutes.delete("/api/user", Cdeleteuser);
+userRoutes.delete("/user", Cdeleteuser);
+
+//REGISTER
+userRoutes.post("/register", CuserReg);
+
+//LOGGIN
+userRoutes.post("/login", ClogUser);
 
 //Error routes
 userRoutes.get("*", Cerroruser);
